@@ -16,6 +16,7 @@ public class PaintPanel extends JPanel implements MouseMotionListener, MouseList
     private Color currentColor;
 
     public static final int MAX_LAYERS = 7;
+    public static final int PRECISION_SIZE = 1;
     public static final int PENCIL_SIZE = 8;
     public static final int MARKER_SIZE = 24;
 
@@ -35,13 +36,18 @@ public class PaintPanel extends JPanel implements MouseMotionListener, MouseList
         setBackground(new Color(170,180,200));
 
         drawingLayers = new ArrayList<>();
+        addLayer();
 
-        for (currentLayer = 0; currentLayer < MAX_LAYERS; currentLayer++)
-            drawingLayers.add(new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB));
         currentColor = Color.RED;
         currentLayer = 0;
         canvasBackground = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         canvasBackground.getGraphics().fillRect(0, 0, width, height);
+
+        Toolkit toolkit = Toolkit.getDefaultToolkit();
+        Image image = toolkit.getImage("img/paintcursor.png");
+        Cursor c = toolkit.createCustomCursor(image , new Point(this.getX(),
+                this.getY()), "img");
+        this.setCursor(c);
 
         addMouseListener(this);
         addMouseMotionListener(this);
@@ -52,7 +58,7 @@ public class PaintPanel extends JPanel implements MouseMotionListener, MouseList
      * @param x
      * @param y
      */
-    private void drawBrush(int x, int y){
+    private void drawBrush(int x, int y) {
         Graphics g = drawingLayers.get(currentLayer).getGraphics();
         g.setColor(currentColor);
         g.fillOval(x - brushSize/2, y - brushSize/2, brushSize, brushSize);
@@ -65,7 +71,7 @@ public class PaintPanel extends JPanel implements MouseMotionListener, MouseList
      * @param x2
      * @param y2
      */
-    private void drawLine(int x1, int y1, int x2, int y2){
+    private void drawLine(int x1, int y1, int x2, int y2) {
         Graphics2D g = (Graphics2D) drawingLayers.get(currentLayer).getGraphics();
         g.setColor(currentColor);
         g.setStroke(new BasicStroke(brushSize, BasicStroke.CAP_ROUND, BasicStroke.JOIN_BEVEL));
@@ -75,12 +81,33 @@ public class PaintPanel extends JPanel implements MouseMotionListener, MouseList
     /**
      * Replaces all drawings on the current layer with a color with 0 alpha
      */
-    public void clearLayer(){
+    public void clearLayer() {
         BufferedImage layer = drawingLayers.get(currentLayer);
         for (int i = 0; i < height; i++)
             for (int j = 0; j < width; j++)
                 layer.setRGB(j, i, 0);
         repaint();
+    }
+
+    public int addLayer() {
+        if (drawingLayers.size() < MAX_LAYERS) {
+            drawingLayers.add(new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB));
+            currentLayer = drawingLayers.size()-1;
+            repaint();
+            return currentLayer;
+        }
+        return -1;
+    }
+
+    public int deleteLayer() {
+        if (drawingLayers.size() > 1) {
+            int oldLayer = currentLayer;
+            drawingLayers.remove(oldLayer);
+            currentLayer = Math.max(0, currentLayer-1);
+            repaint();
+            return oldLayer;
+        }
+        return -1;
     }
 
     /**
@@ -135,12 +162,16 @@ public class PaintPanel extends JPanel implements MouseMotionListener, MouseList
 
     /* * * * * * Setter and Getter methods * * * * * */
 
-    public BufferedImage getCurrentLayer() {
+    public BufferedImage getCurrentLayerImage() {
         return drawingLayers.get(currentLayer);
     }
 
     public void setCurrentLayer(int currentLayer) {
         this.currentLayer = Math.min(Math.max(0, currentLayer), currentLayer);
+    }
+
+    public int getCurrentLayer() {
+        return currentLayer;
     }
 
     public BufferedImage getMerged(boolean drawBackground){

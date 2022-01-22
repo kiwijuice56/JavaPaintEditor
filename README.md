@@ -12,5 +12,4 @@ A simple paint editor made in Java using awt and swing
 - Implement loading images
 - Implement opacity property of layers
 - Add a color palette 
-- Add options to create/delete layers
 

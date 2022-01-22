@@ -143,6 +143,16 @@ public class PaintPanel extends JPanel implements MouseMotionListener, MouseList
         this.currentLayer = Math.min(Math.max(0, currentLayer), currentLayer);
     }
 
+    public BufferedImage getMerged(boolean drawBackground){
+        BufferedImage merged = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+        Graphics g = merged.getGraphics();
+        if (drawBackground)
+            g.drawImage(canvasBackground, 0, 0, null);
+        for (BufferedImage image : drawingLayers)
+            g.drawImage(image, 0, 0, null);
+        return merged;
+    }
+
     public int getBrushSize() {
         return brushSize;
     }

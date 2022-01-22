@@ -25,7 +25,7 @@ public class EditorFrame extends JFrame {
         topPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
         topPanel.setBorder(BorderFactory.createMatteBorder(0, 0, 1, 0, new Color(240,240,240)));
         topPanel.setBackground(Color.WHITE);
-        topPanel.add(new FileControlPanel());
+        topPanel.add(new FileControlPanel(paintPanel));
 
         /* * * * * * RIGHT PANEL * * * * * */
         JPanel rightPanel = new JPanel();

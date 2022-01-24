@@ -23,7 +23,7 @@ public class BrushSelectionPanel extends JPanel{
 		JPanel sizeSliderContainer = new JPanel();
 		sizeSliderContainer.setMaximumSize(new Dimension(Integer.MAX_VALUE, 32));
 
-		JSlider sizeSlider = new JSlider(JSlider.HORIZONTAL, 1, 64, 8);
+		JSlider sizeSlider = new JSlider(JSlider.HORIZONTAL, 1, 80, 8);
 
 		sizeSliderContainer.add(new JLabel("Size"));
 		sizeSliderContainer.add(sizeSlider);

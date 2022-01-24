@@ -6,10 +6,11 @@ A simple paint editor made in Java using awt and swing
 ## Features
 - Layering of drawings
 - Different brush sizes and colors, including an alpha channel
+- Color palette to swap colors easily
 - Saving images with transparent backgrounds
 
 ## Todo
 - Implement loading images
-- Implement opacity property of layers
-- Add a color palette 
+- Implement canvas moving and resizing
+- Implement rectangle select tool
 

@@ -7,6 +7,7 @@ import java.awt.*;
 public class ColorSelectionPanel extends JPanel {
 	private JPanel colorHint;
 	private PaintPanel paintPanel;
+	private JSlider r, g, b, a;
 
 	public static final int NO_CHANGE = -1;
 
@@ -26,10 +27,23 @@ public class ColorSelectionPanel extends JPanel {
 
 		add(colorHint);
 
-		JSlider r = new JSlider(JSlider.HORIZONTAL, 0, 255, 255);
-		JSlider g = new JSlider(JSlider.HORIZONTAL, 0, 255, 0);
-		JSlider b = new JSlider(JSlider.HORIZONTAL, 0, 255, 0);
-		JSlider a = new JSlider(JSlider.HORIZONTAL, 0, 255, 255);
+		PalettePanel palette = new PalettePanel(paintPanel, this);
+		JButton addButton = new JButton("Save Color");
+		JButton delButton = new JButton("Delete Color");
+		addButton.addActionListener(e -> palette.addColor(colorHint.getBackground()));
+		delButton.addActionListener(e -> palette.deleteColor(colorHint.getBackground()));
+		JPanel paletteControl = new JPanel();
+		paletteControl.add(addButton); paletteControl.add(delButton);
+
+		add(palette);
+		add(paletteControl);
+
+		paletteControl.setMaximumSize(new Dimension(Integer.MAX_VALUE, 32));
+
+	 	r = new JSlider(JSlider.HORIZONTAL, 0, 255, 255);
+	 	g = new JSlider(JSlider.HORIZONTAL, 0, 255, 0);
+	 	b = new JSlider(JSlider.HORIZONTAL, 0, 255, 0);
+	 	a = new JSlider(JSlider.HORIZONTAL, 0, 255, 255);
 		r.addChangeListener(e -> updateColor(r.getValue(), -1, -1, -1));
 		g.addChangeListener(e -> updateColor(-1, g.getValue(), -1, -1));
 		b.addChangeListener(e -> updateColor(-1, -1, b.getValue(), -1));
@@ -47,19 +61,28 @@ public class ColorSelectionPanel extends JPanel {
 
 	/**
 	 * Updates the colorHint JPanel and the PaintPanel's currentColor
-	 * @param r Red value for new color; pass ColorSelectionPanel.NO_CHANGE to keep the red value unchanged
-	 * @param g Green value for new color; pass ColorSelectionPanel.NO_CHANGE to keep the green value unchanged
-	 * @param b Blue value for new color; pass ColorSelectionPanel.NO_CHANGE to keep the blue value unchanged
-	 * @param a Alpha value for new color; pass ColorSelectionPanel.NO_CHANGE to keep the alpha value unchanged
+	 * @param rVal Red value for new color; pass ColorSelectionPanel.NO_CHANGE to keep the red value unchanged
+	 * @param gVal Green value for new color; pass ColorSelectionPanel.NO_CHANGE to keep the green value unchanged
+	 * @param bVal Blue value for new color; pass ColorSelectionPanel.NO_CHANGE to keep the blue value unchanged
+	 * @param aVal Alpha value for new color; pass ColorSelectionPanel.NO_CHANGE to keep the alpha value unchanged
 	 */
-	private void updateColor(int r, int g, int b, int a){
+	public void updateColor(int rVal, int gVal, int bVal, int aVal){
 		Color c = paintPanel.getCurrentColor();
 		paintPanel.setCurrentColor(new Color(
-				r >= 0 ? r : c.getRed(),
-				g >= 0 ? g : c.getGreen(),
-				b >= 0 ? b : c.getBlue(),
-				a >= 0 ? a : c.getAlpha()));
+				rVal >= 0 ? rVal : c.getRed(),
+				gVal >= 0 ? gVal : c.getGreen(),
+				bVal >= 0 ? bVal : c.getBlue(),
+				aVal >= 0 ? aVal : c.getAlpha()));
 		colorHint.setBackground(paintPanel.getCurrentColor());
+		if (rVal >= 0) r.setValue(rVal);
+		if (gVal >= 0) g.setValue(gVal);
+		if (bVal >= 0) b.setValue(bVal);
+		if (aVal >= 0) a.setValue(aVal);
+
 		repaint();
+	}
+
+	public void updateColor(Color color) {
+		updateColor(color.getRed(), color.getGreen(), color.getBlue(), color.getAlpha());
 	}
 }

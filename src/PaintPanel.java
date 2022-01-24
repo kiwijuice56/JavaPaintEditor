@@ -15,7 +15,7 @@ public class PaintPanel extends JPanel implements MouseMotionListener, MouseList
     private int brushSize;
     private Color currentColor;
 
-    public static final int MAX_LAYERS = 7;
+    public static final int MAX_LAYERS = 10;
     public static final int PRECISION_SIZE = 1;
     public static final int PENCIL_SIZE = 8;
     public static final int MARKER_SIZE = 24;

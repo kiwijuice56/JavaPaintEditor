@@ -13,18 +13,19 @@ public class BrushSelectionPanel extends JPanel{
 	public BrushSelectionPanel(PaintPanel paintPanel){
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
+		// Each button has a predefined size in PaintPanel
 		JRadioButton precisionButton = new JRadioButton("Precision");
 		JRadioButton pencilButton = new JRadioButton("Pencil");
 		JRadioButton markerButton = new JRadioButton("Marker");
+
 		ButtonGroup brushTypeGroup = new ButtonGroup();
 		brushTypeGroup.add(precisionButton);
-		brushTypeGroup.add(pencilButton); brushTypeGroup.add(markerButton);
+		brushTypeGroup.add(pencilButton);
+		brushTypeGroup.add(markerButton);
 
 		JPanel sizeSliderContainer = new JPanel();
 		sizeSliderContainer.setMaximumSize(new Dimension(Integer.MAX_VALUE, 32));
-
 		JSlider sizeSlider = new JSlider(JSlider.HORIZONTAL, 1, 80, 8);
-
 		sizeSliderContainer.add(new JLabel("Size"));
 		sizeSliderContainer.add(sizeSlider);
 
@@ -37,8 +38,8 @@ public class BrushSelectionPanel extends JPanel{
 		});
 
 		precisionButton.addActionListener(e -> sizeSlider.setValue(PaintPanel.PRECISION_SIZE));
-		pencilButton.addActionListener(e -> sizeSlider.setValue(PaintPanel.PENCIL_SIZE) );
-		markerButton.addActionListener(e -> sizeSlider.setValue(PaintPanel.MARKER_SIZE) );
+		pencilButton.addActionListener(e -> sizeSlider.setValue(PaintPanel.PENCIL_SIZE));
+		markerButton.addActionListener(e -> sizeSlider.setValue(PaintPanel.MARKER_SIZE));
 		pencilButton.setSelected(true);
 
 		add(precisionButton); add(pencilButton); add(markerButton);

@@ -21,23 +21,18 @@ public class LayerSelectionPanel extends JPanel {
 		thumbnail.setMinimumSize(new Dimension(200, 500));
 		thumbnail.setOriginal(paintPanel.getCurrentLayerImage());
 
+		/* * * * * * * BUTTONS AND LABEL * * * * * * */
 		JButton clearButton = new JButton("Clear");
-		clearButton.addActionListener(e -> paintPanel.clearLayer());
-
 		JButton addButton = new JButton("Add");
 		JButton delButton = new JButton("Delete");
-
 		JLabel currentLayer = new JLabel("Layer: 0");
-
 		JPanel topRowPanel = new JPanel();
-		topRowPanel.add(currentLayer);
-		topRowPanel.add(clearButton);
-		topRowPanel.add(addButton);
-		topRowPanel.add(delButton);
+		topRowPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 64));
 
 		JPanel buttonContainer = new JPanel();
 		buttonContainer.setLayout(new GridLayout(PaintPanel.MAX_LAYERS, 1));
 
+		// First button must be added for PaintPanel's initial first layer
 		LayerButton firstLayerButton = new LayerButton(0, paintPanel, thumbnail, currentLayer);
 		buttonContainer.add(firstLayerButton);
 		layerButtons.add(firstLayerButton);
@@ -73,14 +68,13 @@ public class LayerSelectionPanel extends JPanel {
 				}
 			}
 		});
+		clearButton.addActionListener(e -> paintPanel.clearLayer());
 
-		topRowPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 64));
-
-		JPanel opacityPanel = new JPanel();
-		JSlider opacitySlider = new JSlider(JSlider.HORIZONTAL, 0, 255, 255);
-		opacityPanel.add(new JLabel("Opacity"));
-		opacityPanel.add(opacitySlider);
-		opacityPanel.setMaximumSize(new Dimension(Integer.MAX_VALUE, 64));
+		/* * * * * * * ASSEMBLY * * * * * * */
+		topRowPanel.add(currentLayer);
+		topRowPanel.add(clearButton);
+		topRowPanel.add(addButton);
+		topRowPanel.add(delButton);
 
 		add(thumbnail);
 		add(topRowPanel);

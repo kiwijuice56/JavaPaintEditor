@@ -16,7 +16,8 @@ public class ThumbnailPanel extends JPanel implements AWTEventListener {
      */
     public ThumbnailPanel(int width, int height) {
         Toolkit.getDefaultToolkit().addAWTEventListener(this, AWTEvent.MOUSE_EVENT_MASK);
-        setMinimumSize(new Dimension(width, height));
+        setMaximumSize(new Dimension(width, height));
+        setPreferredSize(new Dimension(width, height));
         setBorder(BorderFactory.createMatteBorder(1, 1, 1, 1, new Color(200,200,200)));
     }
 

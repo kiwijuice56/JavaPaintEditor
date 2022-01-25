@@ -16,7 +16,7 @@ public class EditorFrame extends JFrame {
         /* * * * * * * FRAME * * * * * * * */
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
-        setSize(new Dimension(1200, 700));
+        setSize(new Dimension(1500, 800));
         setTitle("Paint Editor");
         paintPanel = new PaintPanel(800, 600);
 

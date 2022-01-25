@@ -2,6 +2,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.HashMap;
 
+/**
+ * JPanel with buttons that can set the PaintPanel's currentColor to those saved by the user
+ */
 public class PalettePanel extends JPanel {
 	private PaintPanel paintPanel;
 	private ColorSelectionPanel colorSelect;
@@ -16,6 +19,10 @@ public class PalettePanel extends JPanel {
 		setMaximumSize(new Dimension(Integer.MAX_VALUE, 28));
 	}
 
+	/**
+	 * Adds a color to the palette
+	 * @param color The color to be added
+	 */
 	public void addColor(Color color) {
 		if (paletteButtonMap.containsKey(color) || paletteButtonMap.size() >= MAX_COLORS)
 			return;
@@ -35,6 +42,10 @@ public class PalettePanel extends JPanel {
 		paletteButtonMap.put(color, paletteButton);
 	}
 
+	/**
+	 * Deletes a color from the palette
+	 * @param color The color to be deleted
+	 */
 	public void deleteColor(Color color) {
 		if (!paletteButtonMap.containsKey(color))
 			return;

@@ -89,6 +89,10 @@ public class PaintPanel extends JPanel implements MouseMotionListener, MouseList
         repaint();
     }
 
+    /**
+     * Adds a new blank layer to drawingLayers
+     * @return The index of the new layer, unless drawingLayers is the maximum size, in which it returns -1
+     */
     public int addLayer() {
         if (drawingLayers.size() < MAX_LAYERS) {
             drawingLayers.add(new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB));
@@ -99,6 +103,11 @@ public class PaintPanel extends JPanel implements MouseMotionListener, MouseList
         return -1;
     }
 
+    /**
+     * Deletes the currentLayer of drawingLayers and returns the index removed, unless drawingLayers has only
+     * one layer, in which it returns -1
+     * @return The index of the new layer, unless drawingLayers is the maximum size, in which it returns -1
+     */
     public int deleteLayer() {
         if (drawingLayers.size() > 1) {
             int oldLayer = currentLayer;
